@@ -386,7 +386,15 @@ class O {
         })
     }
     static getWorker(e) {
-        return e.getWorker ? e.getWorker() : new Worker(e.workerUrl || new URL("./worker-bundle.js", import.meta.url), { type: "module" });
+        if (e.getWorker) {
+            return e.getWorker();
+        }
+
+        fetch(e.workerUrl || new URL("./worker-bundle.js", import.meta.url)).then(res=> res.text()).then(text => {
+            const blob = new Blob([text], { type: 'application/javascript' });
+            const blobUrl = URL.createObjectURL(blob);
+            return new Worker(blobUrl, { type: 'module' });
+        });
     }
     static async getClient(e, t) {
         var n;
