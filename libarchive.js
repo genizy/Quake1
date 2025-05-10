@@ -386,7 +386,7 @@ class O {
         })
     }
     static getWorker(e) {
-        return e.getWorker ? e.getWorker() : "null";
+        return e.getWorker ? e.getWorker() : new Worker(e.workerUrl || new URL("./worker-bundle.js", import.meta.url), { type: "module" });
     }
     static async getClient(e, t) {
         var n;
