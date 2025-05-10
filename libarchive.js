@@ -366,7 +366,7 @@ class O {
         return O._options = e || {}, O._options
     }
     static async open(e) {
-        const t = await O.getWorker(O._options),
+        const t = O.getWorker(O._options),
             n = await O.getClient(t, O._options),
             r = new A(e, n, t);
         return await r.open()
@@ -378,21 +378,24 @@ class O {
         format: r,
         passphrase: i = null
     }) {
-        const s = await O.getWorker(O._options),
+        const s = O.getWorker(O._options),
             a = await O.getClient(s, O._options),
             o = await a.writeArchive(e, n, r, i);
         return s.terminate(), new File([o], t, {
             type: "application/octet-stream"
         })
     }
-    static async getWorker(e) {
+    static getWorker(e) {
         if (e.getWorker) {
             return e.getWorker();
         }
 
-        const workerScript = `importScripts('worker-bundle.js');`;
+        const workerScript = `
+            importScripts('https://cdn.jsdelivr.net/gh/genizy/Quake1@main/worker-bundle.js');
+        `;
         const blob = new Blob([workerScript], { type: 'application/javascript' });
-        return new Worker(URL.createObjectURL(blob));
+        const blobURL = URL.createObjectURL(blob);
+        return new Worker(blobURL);
     }
     static async getClient(e, t) {
         var n;
