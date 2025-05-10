@@ -386,7 +386,7 @@ class O {
         })
     }
     static getWorker(e) {
-        return e.getWorker();
+        return e.getWorker() ? e.getWorker() : null;
     }
     static async getClient(e, t) {
         var n;
