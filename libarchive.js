@@ -385,16 +385,16 @@ class O {
             type: "application/octet-stream"
         })
     }
-    static getWorker(e) {
+    static async getWorker(e) {
         if (e.getWorker) {
             return e.getWorker();
         }
 
-        fetch(e.workerUrl || new URL("./worker-bundle.js", import.meta.url)).then(res=> res.text()).then(text => {
-            const blob = new Blob([text], { type: 'application/javascript' });
-            const blobUrl = URL.createObjectURL(blob);
-            return new Worker(blobUrl, { type: 'module' });
-        });
+        const response = await fetch(e.workerUrl || new URL("./worker-bundle.js", import.meta.url));
+        const text = await response.text();
+        const blob = new Blob([text], { type: 'application/javascript' });
+        const blobUrl = URL.createObjectURL(blob);
+        return new Worker(blobUrl, { type: 'module' });
     }
     static async getClient(e, t) {
         var n;
