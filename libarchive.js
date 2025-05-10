@@ -366,7 +366,7 @@ class O {
         return O._options = e || {}, O._options
     }
     static async open(e) {
-        const t = O.getWorker(O._options),
+        const t = await O.getWorker(O._options),
             n = await O.getClient(t, O._options),
             r = new A(e, n, t);
         return await r.open()
@@ -378,7 +378,7 @@ class O {
         format: r,
         passphrase: i = null
     }) {
-        const s = O.getWorker(O._options),
+        const s = await O.getWorker(O._options),
             a = await O.getClient(s, O._options),
             o = await a.writeArchive(e, n, r, i);
         return s.terminate(), new File([o], t, {
