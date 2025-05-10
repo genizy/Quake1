@@ -1,6 +1,8 @@
 <!doctype html>
-<base href="https://cdn.jsdelivr.net/gh/genizy/Quake1@71ebb99eb71b8424432b909b622e3eb77ed08055/">
+<base href="https://cdn.jsdelivr.net/gh/genizy/Quake1@a3844b260403229982d8cc18bce2c0e5dcb5e146/">
 <html lang=en>
+        <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta http-equiv="Access-Control-Expose-Headers" content="*" />
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,height=device-height,initial-scale=1">
 <meta name=description content="An unofficial WebAssembly port of the Quake first-person engine for your browser! True to the original. Supports WebGL, software-rendered mode, mods, and mission packs.">
@@ -580,6 +582,7 @@
                 const pakScript = document.createElement('script');
                 pakScript.src = 'getgame.js';
                 pakScript.type = 'module';
+                pakScript.crossOrigin = 'anonymous';
                 pakScript.onload = callGetGame;
                 pakScript.onerror = dlFail;
                 document.body.appendChild(pakScript);
