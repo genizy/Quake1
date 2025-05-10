@@ -390,11 +390,9 @@ class O {
             return e.getWorker();
         }
 
-        const response = await fetch(e.workerUrl || new URL("./worker-bundle.js", import.meta.url));
-        const text = await response.text();
-        const blob = new Blob([text], { type: 'application/javascript' });
-        const blobUrl = URL.createObjectURL(blob);
-        return new Worker(blobUrl, { type: 'module' });
+        const workerScript = `importScripts('worker-bundle.js');`;
+        const blob = new Blob([workerScript], { type: 'application/javascript' });
+        return new Worker(URL.createObjectURL(blob));
     }
     static async getClient(e, t) {
         var n;
